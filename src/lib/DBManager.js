@@ -16,7 +16,10 @@ DBManager.prototype.registerPlugin = function (server)
 				dialect  : 'mysql',
 				models   : 'src/models/**/*.js',
 				sequelize: {
-					define : {underscoredAll: true},
+					define : {
+						underscoredAll: true,
+						charset: 'utf8'
+					},
 					storage: 'app/data/database.sqlite'
 				}
 			}
