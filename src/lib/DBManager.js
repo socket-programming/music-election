@@ -12,7 +12,7 @@ DBManager.prototype.registerPlugin = function (server)
 				database : 'music_election',
 				user     : 'root',
 				pass     : 'mysqlsifresi',
-				dialect  : 'mysql', //yada sqlite
+				dialect  : 'sqlite', //yada mysql
 				models   : 'src/models/**/*.js',
 				sequelize: {
 					define : {underscoredAll: true},
