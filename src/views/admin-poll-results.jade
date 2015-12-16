@@ -8,14 +8,15 @@ block content
                     ul.list-group
                         include partials/poll-result-list
 
-            .vote-log.col-xs-6
+            .vote-log-container.col-xs-6
                 h5.page-header.m-t-2 Oylama günlüğü
                     if(poll.status === 'active')
                         a.btn.btn-link.btn-danger-outline.btn-close-poll.pull-right(href='/admin/poll/close/' + poll.get(
                                 'id'))
                             i.fa.fa-times
                             | &nbsp;Anketi kapa
-                include partials/vote-log
+                .vote-log
+                    include partials/vote-log
 
 
 block scripts
