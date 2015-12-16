@@ -128,7 +128,7 @@ module.exports = [
 						});
 				})
 				.then(pollAnswers => {
-					viewData.logAnswers = pollAnswers;
+					viewData.logAnswers = pollAnswers.sort((a, b) => b.createdAt - a.createdAt);
 
 					reply.view('admin-poll-results', viewData);
 				})

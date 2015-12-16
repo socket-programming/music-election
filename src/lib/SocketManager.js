@@ -29,7 +29,11 @@ SocketManager.prototype.onConnection = function (client) {
 						{polls: polls},
 						(err, rendered) => {
 
-							console.log(err);
+							if(err)
+							{
+								console.error(err);
+							}
+
 
 							client.broadcast.emit(
 								'survey',
@@ -71,10 +75,10 @@ SocketManager.prototype.onConnection = function (client) {
 
 							serverReference.render(
 								'partials/vote-log',
-								{logAnswers: pollAnswers},
+								{logAnswers: pollAnswers.sort((a, b) => b.createdAt - a.createdAt)},
 								(err, rendered) => {
 
-									console.log(err);
+									console.error(err);
 
 									client.broadcast.emit(
 										'new-guest-vote',
@@ -119,7 +123,7 @@ SocketManager.prototype.onConnection = function (client) {
 				.catch(err => {
 					if (err)
 					{
-						console.log(err);
+						console.error(err);
 					}
 					client.emit('vote.fail', {
 						message: 'Bu anket için daha önce zaten bir oy kullanmışsınız'
