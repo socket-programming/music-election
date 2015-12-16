@@ -3,6 +3,7 @@ function DBManager(server)
 	this.registerPlugin(server);
 };
 
+;
 DBManager.prototype.registerPlugin = function (server)
 {
 	server.register(
@@ -10,9 +11,9 @@ DBManager.prototype.registerPlugin = function (server)
 			register: require('hapi-sequelize'),
 			options : {
 				database : 'music_election',
-				user     : 'root',
-				pass     : 'mysqlsifresi',
-				dialect  : 'sqlite', //yada mysql
+				user     : process.env.MYSQL_USER,
+				pass     : process.env.MYSQL_PASS,
+				dialect  : 'mysql',
 				models   : 'src/models/**/*.js',
 				sequelize: {
 					define : {underscoredAll: true},
