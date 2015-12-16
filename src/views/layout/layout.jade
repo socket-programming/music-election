@@ -1,0 +1,47 @@
+doctype html
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+        meta(http-equiv="x-ua-compatible", content="ie=edge")
+
+        block title
+            title= title
+
+
+        link(href='/css/bootstrap.min.css', rel="stylesheet", type="text/css")
+        link(href='/css/main.css', rel="stylesheet", type="text/css")
+        link(href='/css/font-awesome.min.css', rel="stylesheet", type="text/css")
+        block css
+
+    body
+        header.pos-f-t
+            nav.navbar.navbar-light.bg-faded
+                button.navbar-toggler.hidden-sm-up(type='button', data-toggle='collapse', data-target='#navbar-header', aria-controls='navbar-header')
+                    | ☰
+                #navbar-header.collapse.navbar-toggleable-xs
+                    a.navbar-brand(href='#') Müzik seç
+                    ul.nav.navbar-nav
+                        li.nav-item.active
+                            a.nav-link(href='/')
+                                | Anasayfa
+                                span.sr-only (current)
+                        if(!isLoggedIn)
+                            li.nav-item
+                                a.nav-link(href='/login') Yönetici
+                        else
+                            li.nav-item
+                                a.nav-link(href='/logout') Çıkış yap
+
+        .container
+            block content
+
+        footer.footer
+            .container
+                span.text-muted Müziğini seç, istediğini dinle
+
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+        script(src="/js/bootstrap.min.js")
+        block scripts
+            script(src="/socket.io/socket.io.js")
+            script(src="/js/client-socket.js")

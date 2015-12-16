@@ -1,0 +1,68 @@
+extends layout/layout.jade
+block content
+    .container.m-t-2.m-b-2
+        .row
+            .col-sm-6
+                form(action='/admin/music', method='POST')
+                    h4 Müzik ekle
+                    .form-group
+                        input.form-control(type='text', name='music-name', placeholder='Müzik adı', required)
+                    .form-group
+                        button.btn.btn-primary-outline(type=submit) Kaydet
+
+                h4 Müzikleri düzenle
+                ul.list-group
+                    each music in musicList
+                        li.list-group-item
+                            | #{music.get('name')}
+                            button.btn.btn-sm.btn-link.pull-right.btn-delete-music(data-method='delete', data-url='/admin/music/delete/' + music.get('id') )
+                                i.fa.fa-trash
+
+            .col-sm-6
+                form(action='/admin/poll', method='POST')
+                    h4 Müzik Anketi Oluştur
+                    .form-group
+                        input.form-control(type='text', name='poll-name', placeholder='Anket adı', required)
+                    .form-group
+                        label(for='select-option-list') Müzik seçenekleri:
+                        select.form-control(multiple, name='poll-options', id='select-option-list')
+                            each music in musicList
+                                option(value= music.get('id'), selected)
+                                    | #{music.get('name')}
+                    .form-group
+                        button.btn.btn-primary-outline(type=submit) Kaydet
+
+                h4 Anketleri düzenle
+                if(polls.length > 0)
+                    ul.list-group
+                        each poll in polls
+                            li.list-group-item
+                                | #{poll.get('name')}&nbsp;
+
+                                case poll.get('status')
+                                    when 'closed'
+                                        span.label.label-danger closed
+                                    when 'active'
+                                        span.label.label-success active
+                                    when 'inactive'
+                                    default
+                                        span.label.label-warning inactive
+                                        a.btn.btn-sm.btn-link.pull-right(href='/admin/poll/publish/' + poll.get('id'))
+                                            i.fa.fa-rss
+                                            | Yayınla
+
+                                if(poll.get('status') === 'closed' || poll.get('status') === 'active')
+                                    a.btn.btn-link.btn-sm.pull-right(href='/admin/poll-results/' + poll.get('id'))
+                                        i.fa.fa-bar-chart
+                                        | &nbsp;Sonuç
+
+
+
+                else
+                    span.text-muted Hiç bir anket oluşturulmadı
+
+
+
+
+block scripts
+    script(src="/js/admin-operations.js")

@@ -1,0 +1,59 @@
+extends layout/layout
+block content
+    .container.m-b-2
+        .row
+            .col-xs-6
+                h5.page-header.m-t-2 #{poll.get('name')} - Sonuçlar
+                .vote-results
+                    ul.list-group
+                        include partials/poll-result-list
+
+            .vote-log.col-xs-6
+                h5.page-header.m-t-2 Oylama günlüğü
+                    if(poll.status === 'active')
+                        a.btn.btn-link.btn-danger-outline.btn-close-poll.pull-right(href='/admin/poll/close/' + poll.get(
+                                'id'))
+                            i.fa.fa-times
+                            | &nbsp;Anketi kapa
+                include partials/vote-log
+
+
+block scripts
+    script(src="/js/admin-operations.js")
+    script(src="/socket.io/socket.io.js")
+    script.
+        (function () {
+            var socket       = io();
+            var pollId       = #{poll.get('id')};
+            var $voteResults = $('.vote-results');
+            var $voteLog     = $('.vote-log');
+            var pollStatus   = '#{poll.get('status')}';
+
+            socket.emit('survey-status', {
+                pollId: pollId
+            });
+
+
+            socket.on(
+                    'new-guest-vote',
+                    function (data)
+                    {
+                        if (data.pollId === pollId)
+                        {
+                            $voteLog.html(data.pollLogHtml);
+                        }
+                    });
+
+            socket.on(
+                    'all-votes',
+                    function (data)
+                    {
+                        console.log(data.pollId, pollId);
+
+                        if (data.pollId === pollId)
+                        {
+                            $voteResults.html(data.resultHtml);
+                        }
+                    });
+        })();
+

@@ -1,0 +1,7 @@
+each answer in logAnswers
+    blockquote.blockquote
+        | #{answer.poll_option.music.name} oylandı.
+if(logAnswers.length === 0)
+    span.text-muted Herhangi bir oylama yapılmadı.
+
+

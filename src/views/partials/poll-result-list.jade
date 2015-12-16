@@ -1,0 +1,5 @@
+each option in options
+    li.list-group-item(data-option-id=option.id, data-poll-id=option.poll.id)
+        | #{option.music.name}
+        span.label.label-pill.label-info.pull-right
+            | #{option.PollAnswers.length}

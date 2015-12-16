@@ -1,0 +1,7 @@
+if(polls.length > 0)
+    ul.list-group
+        each poll in polls
+            li.list-group-item
+                a(href='/poll/vote/' + poll.get('id')) #{poll.get('name')}
+else
+    span.text-muted Şu an aktif anket bulunmamaktadır. Anketler aktive edildiğinde burada görunecektir.

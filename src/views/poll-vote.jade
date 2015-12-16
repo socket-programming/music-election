@@ -1,0 +1,19 @@
+extends layout/layout
+
+block content
+    h1.page-header.m-t-2 #{poll.get('name')} anketi
+
+    h6.m-t-2 Aşağıdaki müziklerden birini seçiniz:
+    form.form-vote-music(data-poll-id=poll.get('id'))
+        each option in options
+            div.radio
+                label
+                    input(type='radio', name='poll-answer', value=option.get('id'), required)
+                    | &nbsp;#{option.music.get('name')}
+
+
+        button.btn.btn-primary.btn-send-answer(type=submit) Seçimi gönder
+
+block scripts
+    script(src="/socket.io/socket.io.js")
+    script(src="/js/client-socket.js")
